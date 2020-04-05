@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>1.jQuery内部核心函数callback | 前端漫漫</title>
+    <meta name="description" content="Movi个人博客">
+    <meta name="generator" content="VuePress 1.4.0">
+    <link rel="icon" href="/blog-vuepress/favicon.ico">
+    
+    <link rel="preload" href="/blog-vuepress/assets/css/0.styles.a986c992.css" as="style"><link rel="preload" href="/blog-vuepress/assets/js/app.78b3a3b1.js" as="script"><link rel="preload" href="/blog-vuepress/assets/js/2.48833302.js" as="script"><link rel="preload" href="/blog-vuepress/assets/js/7.265beb59.js" as="script"><link rel="prefetch" href="/blog-vuepress/assets/js/3.66564ad6.js"><link rel="prefetch" href="/blog-vuepress/assets/js/4.a491e996.js"><link rel="prefetch" href="/blog-vuepress/assets/js/5.56fc5e66.js"><link rel="prefetch" href="/blog-vuepress/assets/js/6.6324ab5d.js"><link rel="prefetch" href="/blog-vuepress/assets/js/8.04ce1c5c.js">
+    <link rel="stylesheet" href="/blog-vuepress/assets/css/0.styles.a986c992.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog-vuepress/" class="home-link router-link-active"><!----> <span class="site-name">前端漫漫</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog-vuepress/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="文章" class="dropdown-title"><span class="title">文章</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog-vuepress/technical/" class="nav-link router-link-active">
+  软技能
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/ncumovi" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/blog-vuepress/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="文章" class="dropdown-title"><span class="title">文章</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/blog-vuepress/technical/" class="nav-link router-link-active">
+  软技能
+</a></li></ul></div></div><div class="nav-item"><a href="https://github.com/ncumovi" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>1.jQuery内部核心函数callback</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/blog-vuepress/technical/jQuery-callback.html#_2-callback之once" class="sidebar-link">2.callback之once</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/blog-vuepress/technical/jQuery-callback.html#_3-callback之stoponfalse" class="sidebar-link">3.callback之stopOnfalse</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/blog-vuepress/technical/jQuery-callback.html#_4-callback之memory" class="sidebar-link">4.callback之memory</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/blog-vuepress/technical/jQuery-callback.html#callback完整代码的简易实现" class="sidebar-link">callback完整代码的简易实现</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="_1-jquery内部核心函数callback"><a href="#_1-jquery内部核心函数callback" class="header-anchor">#</a> 1.jQuery内部核心函数callback</h1> <p>$.callback可以通过add添加回调函数，fire执行回调函数。初始化创建callback实例的时候，可以传递三个参数的组合，stopOnfalse表示如果其中一个回调函数的返回值是false,则后续的回调函数不再执行；once表示只执行一次，即add进去的回调函数只会在第一次fire的时候会执行，如果后面再继续调用fire,回调函数不会再执行；memory表示再调用fire函数以后，后面再继续调用add添加函数的时候，该回调函数会立即执行，且之前执行过的回调不会再被执行，以下是代码的完整简易实现，要点以及个人理解都在代码注释里面。</p> <div class="language- extra-class"><pre><code>var cb = $.callbacks('stopOnfalse once memory');
+
+cb.add(function(){
+    console.log(1)
+    return false
+}, function(){
+    console.log(2)
+});
+
+cb.add(function(){
+    console.log(5)
+});
+    
+cb.fire();
+
+cb.add(function(){
+    console.log('3')
+})
+</code></pre></div><h2 id="_2-callback之once"><a href="#_2-callback之once" class="header-anchor">#</a> 2.callback之once</h2> <div class="language- extra-class"><pre><code>var cb = $.callbacks('once');
+
+cb.add(function(){
+    console.log(1)
+});
+
+cb.fire(); //输出1
+cb.fire(); //没有输出
+</code></pre></div><h2 id="_3-callback之stoponfalse"><a href="#_3-callback之stoponfalse" class="header-anchor">#</a> 3.callback之stopOnfalse</h2> <div class="language- extra-class"><pre><code>var cb = $.callbacks('once');
+
+cb.add(function(){
+    console.log(1)
+    return false
+}, function(){
+    console.log(2)
+});
+
+cb.fire(); //输出1 
+</code></pre></div><h2 id="_4-callback之memory"><a href="#_4-callback之memory" class="header-anchor">#</a> 4.callback之memory</h2> <div class="language- extra-class"><pre><code>var cb = $.callbacks('stopOnfalse once memory');
+
+cb.add(function(){
+    console.log(1)
+});
+
+cb.add(function(){
+    console.log(5)
+});
+    
+cb.fire(); //输出1和5
+
+//会立即执行
+cb.add(function(){
+    console.log(3)
+})
+</code></pre></div><p>以上会分别输出1，5，3</p> <h2 id="callback完整代码的简易实现"><a href="#callback完整代码的简易实现" class="header-anchor">#</a> callback完整代码的简易实现</h2> <div class="language- extra-class"><pre><code>...
+callbacks: function(option){
+    //回调函数列表 
+    var list = [],
+    //执行回调函数的下标 默认从第一个开始
+        index,
+    //手动设置执行回调函数列表的下标    
+        start,
+    //回调函数列表的长度
+        listLength,
+    //回调函数是否执行过
+        hasRun;
+    //当前回调队列策略 参数 once stopOnfalse memory
+    option = typeof option === 'string' ? (optionCach[option] || createOptionCach(option)) : {};
+    //当传进来的参数、模式不在缓存对象里面时候 需要重新创建
+    function createOptionCach(option){
+        //将空对象、缓存对象的对象引用给obj 并返回
+        var obj = optionCach[option] = {};
+        option.split(/\s+/).forEach(function(opt){
+            obj[opt] = true;
+        });
+        return obj;
+    }
+    //循环执行回调函数列表里面的回调函数
+    var fire = function(data){
+        index = start || 0;
+        hasRun = true;
+        for(index; index &lt; list.length; index++){
+            //如果回调函数的返回值是false 同时又配置了stopOnfalse的时候就跳出循环
+            if(list[index].apply(data[0], data[1]) == false &amp;&amp; option.stopOnfalse){
+                break;
+            };
+        }
+    }
+    var self = {
+        add:function(){
+            var args = Array.prototype.slice.call(arguments);
+            //每次添加回调函数的时候 记录当前回调函数列表的长度
+            listLength = list.length;
+            //循环遍历args将add进来的回调函数全部放到事件列表list
+            args.forEach(function(fn){
+                //如果传进来的参数是函数对象 则添加到回调函数列表
+                if(toString.call(fn) === '[object Function]'){
+                    list.push(fn);
+                }
+            })
+            //当配置的memory的同时回调函数还没执行过 则将下次执行回调函数的下标置为当前事件列表的长度 避免执行的时候重复执行
+            if(option.memory &amp;&amp; hasRun){
+                start = listLength;
+                self.fire(arguments);
+            }
+
+        },
+        fireWith:function(context, arg){
+            var args = [context, arg];
+            //如果是配置了只执行一次 或者还没执行过才执行
+            if(!option.once || !hasRun){
+                fire(args)
+            }
+            
+        },
+        fire:function(){
+            //把当前jQuery实例对象以及传递的参数通过fireWith传递
+            self.fireWith(this, arguments);
+        }
+    }
+    //这里返回self以实现链式调用
+    return self;
+}</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/blog-vuepress/assets/js/app.78b3a3b1.js" defer></script><script src="/blog-vuepress/assets/js/2.48833302.js" defer></script><script src="/blog-vuepress/assets/js/7.265beb59.js" defer></script>
+  </body>
+</html>
